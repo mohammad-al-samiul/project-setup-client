@@ -9,12 +9,26 @@ import { FormInput } from "@/components/form/FormInput";
 import { RegisterData } from "@/schemas/auth/authSchema";
 import { FormPassword } from "@/components/form/FormPassword";
 import { useRegisterForm } from "@/hooks/form";
+import { useRegister } from "@/hooks/auth";
 
 export function RegisterForm() {
   const form = useRegisterForm();
 
+  const { mutate, isPending } = useRegister();
+
   const onSubmit = (data: RegisterData) => {
     console.log("Register:", data);
+    mutate(data, {
+      onSuccess: (res) => {
+        console.log(res);
+        // tokenStore.set(res.accessToken);
+        // router.push("/home");
+      },
+      onError: (err) => {
+        console.error(err);
+        // toast.error("Register failed");
+      },
+    });
   };
 
   return (
@@ -76,8 +90,12 @@ export function RegisterForm() {
             /> */}
           </FieldGroup>
 
-          <Button className="mt-4 w-full py-4" type="submit">
-            Register
+          <Button
+            className="mt-4 w-full py-4"
+            type="submit"
+            disabled={isPending}
+          >
+            {isPending ? "Registering..." : "Register"}
           </Button>
         </form>
       </CardContent>
