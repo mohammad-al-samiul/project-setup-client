@@ -5,9 +5,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FieldGroup } from "@/components/ui/field";
 
 import { FormInput } from "@/components/form/FormInput";
-import { useRegisterForm } from "@/hooks/useRegisterForm";
+
 import { RegisterData } from "@/schemas/auth/authSchema";
 import { FormPassword } from "@/components/form/FormPassword";
+import { useRegisterForm } from "@/hooks/form";
 
 export function RegisterForm() {
   const form = useRegisterForm();
@@ -52,6 +53,13 @@ export function RegisterForm() {
               name="password"
               label="Password"
               placeholder="Enter password"
+              className="mb-6"
+            />
+            <FormPassword
+              form={form}
+              name="confirmPassword"
+              label="Confirm Password"
+              placeholder="Confirm password"
               className="mb-6"
             />
 
